@@ -47,7 +47,7 @@ if (isset($_SESSION['usuario_id'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -61,19 +61,26 @@ if (isset($_SESSION['usuario_id'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body onload="init()">
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
         <!-- Spinner End -->
 
-        
+
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
@@ -83,16 +90,20 @@ if (isset($_SESSION['usuario_id'])) {
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
                         <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0"><?php echo $nombre;  ?></h6>
+                        <h6 class="mb-0"><?php echo $nombre; ?></h6>
                         <span>Admin</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="./index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Panel Rapido</a>
-                    <a href="./graficos.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Calidad oxigeno</a>
+                    <a href="./index.php" class="nav-item nav-link active"><i
+                            class="fa fa-tachometer-alt me-2"></i>Panel Rapido</a>
+                    <a href="./graficos.php" class="nav-item nav-link active"><i
+                            class="fa fa-tachometer-alt me-2"></i>Calidad oxigeno</a>
 
 
                 </div>
@@ -111,17 +122,18 @@ if (isset($_SESSION['usuario_id'])) {
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-               
+
                 <div class="navbar-nav align-items-center ms-auto">
-                    
-                    
+
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex"><?php echo $nombre.' '.$apellido; ?></span>
+                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex"><?php echo $nombre . ' ' . $apellido; ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                           
+
                             <a href="#" class="dropdown-item">Ajustes</a>
                             <a href="../index.html" class="dropdown-item">Cerrar Sesión</a>
                         </div>
@@ -137,139 +149,476 @@ if (isset($_SESSION['usuario_id'])) {
                     <h1 class="display-6">Monitoreo de sensores</h1>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-thermometer-half" style="color: green;"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Temperatura del Bioreactor</p>
-                                <h6 class="mb-0" id="temp_bioreactor"></h6>
+                                <canvas id="temperatura" width="40" height="40"></canvas>
+                                <p class="mb-2" align="center">Temperatura ioreactor</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-thermometer-sun" style="color: green;"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Temperatura Ambiental</p>
-                                <h6 class="mb-0"id="temp_ambiente"></h6>
+                                <canvas id="temperaturaAmbiente" width="40" height="40"></canvas>
+                                <p class="mb-2" align="center">Temperatura ambiente</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-bullseye" style="color: green;"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Presión Atmosferica</p>
-                                <h6 class="mb-0" id="presion_ambiente"></h6>
+                                <canvas id="presionAtmosferica" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">Presion Atmosferica</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-capslock-fill" style="color: green;"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2" >Humedad Ambiente</p>
-                                <h6 class="mb-0" id="humedad_ambiente"> </h6>
+                                <canvas id="humedadAmbiental" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">Humedad Ambiental</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br />
                 <div class="row g-4">
-                    
+
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-exclamation-octagon-fill" style="color: green;"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Solidos Totales Disueltos(TDS):</p>
-                                <h6 class="mb-0" id="TDS"></h6>
+                                <canvas id="tds" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">Solidos Disueltos Totales</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class='fas fa-atom' style='font-size:36px; color:green;'></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">TVOC presente:</p>
-                                <h6 class="mb-0" id="TVOC"></h6>
+                                <canvas id="tvoc" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">TVOC Presente en Bio</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-lightbulb-fill" style="color: green;"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Intensidad de la luz:</p>
-                                <h6 class="mb-0" id="Intensidad_luz"></h6>
+                                <canvas id="tvocbioreactor" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">TVOC en el Bioreactor</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-palette-fill" style="color:green"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Color Agua(Hex)</p>
-                                <h6 class="mb-0" id="color"></h6>
+                                <canvas id="co2presente" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">CO2 Presente ambiente</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
                 <br />
                 <div class="row g-4">
-                    
+
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-speedometer" style="color:green"></i></h1>
+
                             <div class="ms-3">
-                                <p class="mb-2">Co2 presente:</p>
-                                <h6 class="mb-0" id="CO2">400.3 ppm</h6>
+                                <canvas id="co2bioreactor" width="40" height="20"></canvas>
+                                <p class="mb-2" align="center">CO2 Presente Bioreactor</p>
+                                <div class="container">
+
+                                </div>
+                                <h6 class="mb-0" id="temp_ambiente"></h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-speedometer" style="color:green"></i></h1>
-                            <div class="ms-3">
-                                <p class="mb-2">co2 presente en el Bioreactor:</p>
-                                <h6 class="mb-0">27 ppm</h6>
-                            </div>
-                        </div>
+                        
                     </div>
-                   
+
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class='fas fa-atom' style='font-size:36px; color:green;'></i></h1>
-                            <div class="ms-3">
-                                <p class="mb-2">TVOC del bioreactor</p>
-                                <h6 class="mb-0" >0 ppm</h6>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <h1><i class="bi bi-file-earmark-arrow-down-fill" style="color: green;"></i></h1>
-                            <div class="ms-3">
-                                <p class="mb-2">Generar Reporte</p>
-                                
-                            </div>
-                        </div>
+                        
                     </div>
-                   
+
                 </div>
-                
+
             </div>
             <!-- Sale & Revenue End -->
 
 
             <!-- Sales Chart Start -->
-           
+
             <!-- Sales Chart End -->
 
+            <!-- SCRIPTS DE GRAFICAS -->
+            <script>
+                const cta = document.getElementById('temperatura');
 
-        
+                new Chart(cta, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Red'],
+                        datasets: [{
+                            label: 'Temperatura',
+                            data: [27],
 
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                const ctb = document.getElementById('temperaturaAmbiente');
+
+                new Chart(ctb, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Red'],
+                        datasets: [{
+                            label: 'Temperatura',
+                            data: [27],
+
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                // Obtener el contexto del lienzo
+                const ctc = document.getElementById('presionAtmosferica').getContext('2d');
+
+                // Crear el gráfico
+                const presionAtmosferica = new Chart(ctc, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                // Obtener el contexto del lienzo
+                const ctd = document.getElementById('humedadAmbiental').getContext('2d');
+
+                // Crear el gráfico
+                const humedadAmbiental = new Chart(ctd, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
+
+            <script>
+                // Obtener el contexto del lienzo
+                const cte = document.getElementById('tds').getContext('2d');
+
+                // Crear el gráfico
+                const tds = new Chart(cte, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                // Obtener el contexto del lienzo
+                const ctf = document.getElementById('tvoc').getContext('2d');
+
+                // Crear el gráfico
+                const tvoc = new Chart(ctf, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                // Obtener el contexto del lienzo
+                const ctg = document.getElementById('tvocbioreactor').getContext('2d');
+
+                // Crear el gráfico
+                const tvocbioreactor = new Chart(ctg, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                // Obtener el contexto del lienzo
+                const cth = document.getElementById('co2presente').getContext('2d');
+
+                // Crear el gráfico
+                const co2presente = new Chart(cth, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
+
+            <script>
+                // Obtener el contexto del lienzo
+                const cti = document.getElementById('co2bioreactor').getContext('2d');
+
+                // Crear el gráfico
+                const co2bioreactor = new Chart(cti, {
+                    type: 'doughnut', // Tipo de gráfico
+                    data: {
+                        labels: ['Progreso', 'Restante'], // Etiquetas
+                        datasets: [{
+
+                            data: [15, 85], // Progreso (75%) y restante (25%)
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.8)', // Color del progreso
+                                'rgba(200, 200, 200, 0.4)' // Color del restante
+                            ],
+                            borderWidth: 0 // Quitar bordes
+                        }]
+                    },
+                    options: {
+                        rotation: -90, // Iniciar desde la parte superior (-90 grados)
+                        circumference: 180, // Mostrar solo la mitad del círculo (180 grados)
+                        cutout: '70%', // Grosor del anillo (ajusta según el diseño deseado)
+                        responsive: true, // Ajustar dinámicamente
+                        plugins: {
+                            legend: {
+
+                                position: 'bottom', // Posición de la leyenda
+                                display: false // Ocultar la leyenda
+
+
+                            },
+                            tooltip: {
+                                enabled: false // Desactivar tooltips
+                            }
+                        }
+                    }
+                });
+            </script>
 
             <!-- Widgets Start -->
-        
+
             <!-- Widgets End -->
 
 
@@ -278,13 +627,14 @@ if (isset($_SESSION['usuario_id'])) {
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">OxiAlgas</a>, Derechos Reservados. 
+                            &copy; <a href="#">OxiAlgas</a>, Derechos Reservados.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                             Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            </br>
+                            Distributed By <a class="border-bottom" href="https://themewagon.com"
+                                target="_blank">ThemeWagon</a>
                         </div>
                     </div>
                 </div>
@@ -304,13 +654,13 @@ if (isset($_SESSION['usuario_id'])) {
             // Cambia '192.168.1.76' por la dirección IP de tu ESP32
             ws = new WebSocket('ws://192.168.1.76:81'); // IP del ESP32
 
-            ws.onopen = function() {
+            ws.onopen = function () {
                 console.log("Conectado al WebSocket");
                 // Enviar un mensaje para solicitar datos del sensor
                 ws.send("GET_DATA");
             };
 
-            ws.onmessage = function(event) {
+            ws.onmessage = function (event) {
                 const data = JSON.parse(event.data);
                 document.getElementById("temp_bioreactor").innerText = "Temperatura: " + data.temperatureWater + " °C";
                 document.getElementById("temp_ambiente").innerText = "Temperatura: " + data.temperatureBME + " °C";
@@ -323,7 +673,7 @@ if (isset($_SESSION['usuario_id'])) {
                 document.getElementById("Intensidad_luz").innerText = "Intensidad de la luz:" + data.lux;
             };
 
-            ws.onclose = function() {
+            ws.onclose = function () {
                 console.log("Desconectado del WebSocket");
             };
         }
