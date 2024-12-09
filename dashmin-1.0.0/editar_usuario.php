@@ -1,0 +1,139 @@
+<?php
+// Verifica si se pasa un id_usuario para cargar los datos
+if (isset($_GET['id_usuario'])) {
+    // Obtener el id_usuario de la URL
+    $id_user = $_GET['id_usuario'];
+
+    // Consulta para obtener los datos del usuario
+    $sql = "SELECT nombre, apellido, telefono, correo_electronico, contrasena 
+            FROM tabla_usuarios 
+            WHERE id_usuario = ?";
+    $usuario = $db->query($sql, [$id_user]);
+
+    if ($usuario) {
+        // Cargar los valores del usuario para mostrarlos en el formulario
+        $name = $usuario[0]['nombre'];
+        $lastname = $usuario[0]['apellido'];
+        $phone = $usuario[0]['telefono'];
+        $email = $usuario[0]['correo_electronico'];
+        $pass = $usuario[0]['contrasena'];
+    } else {
+        echo "Usuario no encontrado.";
+        exit;
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Sign In Start -->
+        <div class="container-fluid">
+            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <form method="post" action="../php/actualizar/actualizarUsuario.php">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <a href="index.html" class="">
+                                    <h3 class="text-primary">Editar Cliente</h3>
+                                </a>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                    value="<?= htmlspecialchars($name) ?>" required>
+                                <label for="floatingText">Nombre</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="apellido" name="apellido"
+                                    value="<?= htmlspecialchars($lastname) ?>" required>
+                                <label for="floatingText">Apellido Paterno</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" id="telefono" name="telefono"
+                                    value="<?= htmlspecialchars($phone) ?>" required>
+                                <label for="floatingText">Número celular</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="correo" name="correo"
+                                    value="<?= htmlspecialchars($email) ?>" required>
+                                <label for="floatingInput">Correo Electrónico</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="contrasena" name="contrasena"
+                                    value="<?= htmlspecialchars($pass) ?>" required>
+                                <label for="floatingPassword">Contraseña</label>
+                            </div>
+
+                            <input type="hidden" name="id_usuario" value="<?= $id_user ?>">
+                            <!-- Para mantener el ID del usuario en el formulario -->
+
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Actualizar</button>
+                            <a href="./index.php">
+                                <input type="button" class="btn btn-primary py-3 w-100 mb-4" value="Cancelar">
+                            </a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign In End -->
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
